@@ -5,9 +5,6 @@ import React, { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
 import {
-  Menu,
-  Sun,
-  Moon,
   ArrowRight,
   TrendingUp,
   BarChart3,
@@ -97,55 +94,6 @@ export default function Page() {
 
   return (
     <main className="min-h-screen bg-black text-slate-100 antialiased">
-      <header className="fixed w-full top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-orange-500 to-orange-400 shadow-lg flex items-center justify-center">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                aria-hidden>
-                <path
-                  d="M3 12h18"
-                  stroke="#fff"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M7 6v12"
-                  stroke="#fff"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </div>
-            <span className="font-semibold text-lg">RTStock</span>
-            <span className="text-slate-500 ml-2 text-sm">
-              Real-time trading insights
-            </span>
-          </div>
-
-          <nav className="flex items-center gap-3">
-            <button
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="rounded-full p-2 border border-slate-800/60 hover:border-slate-700/80 backdrop-blur-sm">
-              {theme === "dark" ? (
-                <Sun className="h-5 w-5 text-orange-400" />
-              ) : (
-                <Moon className="h-5 w-5 text-slate-700" />
-              )}
-            </button>
-            <button className="hidden md:inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-400 text-black px-4 py-2 rounded-lg font-medium shadow">
-              Login
-            </button>
-            <button className="md:hidden p-2 rounded-md border border-slate-800/60">
-              <Menu className="h-5 w-5" />
-            </button>
-          </nav>
-        </div>
-      </header>
 
       {/* HERO */}
       <section className="relative pt-28 pb-16">
@@ -169,7 +117,7 @@ export default function Page() {
             <div className="mt-8 flex flex-wrap gap-4">
               <Link
                 href="/dashboard"
-               className="inline-flex items-center gap-3 bg-orange-500 hover:bg-orange-400 text-black px-5 py-3 rounded-lg font-semibold shadow">
+                className="inline-flex items-center gap-3 bg-orange-500 hover:bg-orange-400 text-black px-5 py-3 rounded-lg font-semibold shadow">
                 Get Started <ArrowRight className="h-4 w-4" />
               </Link>
               <button className="inline-flex items-center gap-3 border border-slate-800 text-slate-200 px-5 py-3 rounded-lg hover:bg-white/5">
