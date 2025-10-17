@@ -5,6 +5,9 @@ import React, { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
 import {
+  Menu,
+  Sun,
+  Moon,
   ArrowRight,
   TrendingUp,
   BarChart3,
@@ -22,6 +25,7 @@ import {
   CartesianGrid,
 } from "recharts";
 import Link from "next/link";
+import Container from "@/components/Container";
 
 type Point = { t: string; v: number };
 
@@ -93,11 +97,10 @@ export default function Page() {
   );
 
   return (
-    <main className="min-h-screen bg-black text-slate-100 antialiased">
-
+    <Container>
       {/* HERO */}
       <section className="relative pt-28 pb-16">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col lg:flex-row items-center gap-12">
+        <div className=" flex flex-col lg:flex-row items-center gap-12">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
@@ -222,7 +225,7 @@ export default function Page() {
 
       {/* FEATURES */}
       <section className="py-12 border-t border-slate-900/60">
-        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-6">
+        <div className=" grid md:grid-cols-3 gap-6">
           <FeatureCard
             title="Streaming Real-Time"
             desc="Datastream per detik dari berbagai bursa. Latensi minimal, reliability tinggi."
@@ -243,7 +246,7 @@ export default function Page() {
 
       {/* TESTIMONIALS */}
       <section className="py-16">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="">
           <h3 className="text-3xl font-bold mb-6">What pro traders say</h3>
           <div className="grid md:grid-cols-3 gap-6">
             {[
@@ -282,7 +285,7 @@ export default function Page() {
 
       {/* PRICING */}
       <section className="py-16 bg-gradient-to-b from-transparent to-white/2 border-t border-slate-900/50">
-        <div className="max-w-7xl mx-auto px-6 text-center">
+        <div className=" text-center">
           <h3 className="text-3xl font-bold mb-6">
             Simple plans for every trader
           </h3>
@@ -343,7 +346,7 @@ export default function Page() {
 
       {/* CTA */}
       <section className="py-16">
-        <div className="max-w-7xl mx-auto px-6 text-center">
+        <div className=" text-center">
           <div className="inline-block bg-gradient-to-r from-orange-500 to-yellow-400 text-black px-6 py-3 rounded-full font-semibold">
             Start your free trial
           </div>
@@ -358,7 +361,7 @@ export default function Page() {
       </section>
 
       <footer className="py-8 border-t border-slate-900/50">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className=" flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="text-sm text-slate-400">
             © {new Date().getFullYear()} RTStock. All rights reserved.
           </div>
@@ -369,7 +372,7 @@ export default function Page() {
           </div>
         </div>
       </footer>
-    </main>
+    </Container>
   );
 }
 
