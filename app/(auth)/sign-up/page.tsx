@@ -45,12 +45,12 @@ export default function SignUpPage() {
       </div>
 
       {/* 🧾 Right Section — Sign Up Form */}
-      <div className="flex flex-col justify-center bg-[#0b0b0b]">
+      <div className="flex flex-col justify-center px-8 sm:px-16 lg:px-24 py-12 bg-[#0b0b0b]">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="max-w-xl w-full mx-auto">
+          className="sm:max-w-xl max-w-md w-full mx-auto">
           <h1 className="text-3xl font-bold text-orange-500 mb-3">
             Create Account
           </h1>
