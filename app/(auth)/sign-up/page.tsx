@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,8 +13,69 @@ import {
 } from "@/components/ui/select";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { signUpWithEmail } from "@/lib/actions/auth.actions";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
 
 export default function SignUpPage() {
+  const router = useRouter();
+  // 🧠 State untuk semua field
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    password: "",
+    country: "",
+    investmentGoals: "",
+    riskTolerance: "",
+    preferredIndustry: "",
+  });
+  const [isLoading, setIsLoading] = useState(false);
+
+  // 🛠 Handler umum untuk Input dan Select
+  const handleChange = (field: string, value: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
+  // 📨 Nanti bisa dipakai kirim data ke server
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Form Data:", formData);
+
+    setIsLoading(true);
+    try {
+      const {
+        fullName,
+        email,
+        password,
+        country,
+        investmentGoals,
+        riskTolerance,
+        preferredIndustry,
+      } = formData;
+
+      await signUpWithEmail({
+        fullName,
+        email,
+        password,
+        country,
+        investmentGoals,
+        riskTolerance,
+        preferredIndustry,
+      });
+      toast("Account created successfully!");
+      router.replace("/");
+    } catch (error) {
+      console.error("Sign up error:", error);
+      toast("Failed to create account. Please try again.");
+    } finally {
+      setIsLoading(true);
+    }
+  };
+
   return (
     <main className="min-h-screen grid grid-cols-1 lg:grid-cols-2 bg-[#0b0b0b] text-white">
       {/* 🧩 Left Section — Illustration */}
@@ -59,9 +120,9 @@ export default function SignUpPage() {
           </p>
 
           {/* Form Grid Layout */}
-          <form className="flex flex-col gap-6">
+          <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              {/* Name */}
+              {/* Full Name */}
               <div>
                 <label className="text-sm text-gray-400 mb-1 block">
                   Full Name
@@ -69,6 +130,8 @@ export default function SignUpPage() {
                 <Input
                   type="text"
                   placeholder="John Trader"
+                  value={formData.fullName}
+                  onChange={(e) => handleChange("fullName", e.target.value)}
                   className="bg-[#121212] border border-[#222] focus:ring-2 focus:ring-orange-500"
                   required
                 />
@@ -82,6 +145,8 @@ export default function SignUpPage() {
                 <Input
                   type="email"
                   placeholder="you@stocks.io"
+                  value={formData.email}
+                  onChange={(e) => handleChange("email", e.target.value)}
                   className="bg-[#121212] border border-[#222] focus:ring-2 focus:ring-orange-500"
                   required
                 />
@@ -95,9 +160,39 @@ export default function SignUpPage() {
                 <Input
                   type="password"
                   placeholder="••••••••"
+                  value={formData.password}
+                  onChange={(e) => handleChange("password", e.target.value)}
                   className="bg-[#121212] border border-[#222] focus:ring-2 focus:ring-orange-500"
                   required
                 />
+              </div>
+
+              {/* 🌍 Country */}
+              <div>
+                <label className="text-sm text-gray-400 mb-1 block">
+                  Country
+                </label>
+                <Select
+                  onValueChange={(value) => handleChange("country", value)}>
+                  <SelectTrigger className="bg-[#121212] w-full border border-[#222] text-gray-300 focus:ring-2 focus:ring-orange-500">
+                    <SelectValue
+                      placeholder="Select country"
+                      defaultValue={formData.country}
+                    />
+                  </SelectTrigger>
+                  <SelectContent className="bg-[#121212] text-gray-200 border border-[#222]">
+                    <SelectItem value="us">🇺🇸 United States</SelectItem>
+                    <SelectItem value="uk">🇬🇧 United Kingdom</SelectItem>
+                    <SelectItem value="ca">🇨🇦 Canada</SelectItem>
+                    <SelectItem value="jp">🇯🇵 Japan</SelectItem>
+                    <SelectItem value="id">🇮🇩 Indonesia</SelectItem>
+                    <SelectItem value="sg">🇸🇬 Singapore</SelectItem>
+                    <SelectItem value="de">🇩🇪 Germany</SelectItem>
+                    <SelectItem value="fr">🇫🇷 France</SelectItem>
+                    <SelectItem value="au">🇦🇺 Australia</SelectItem>
+                    <SelectItem value="in">🇮🇳 India</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
 
               {/* Investment Goals */}
@@ -105,7 +200,10 @@ export default function SignUpPage() {
                 <label className="text-sm text-gray-400 mb-1 block">
                   Investment Goals
                 </label>
-                <Select>
+                <Select
+                  onValueChange={(value) =>
+                    handleChange("investmentGoals", value)
+                  }>
                   <SelectTrigger className="bg-[#121212] w-full border border-[#222] text-gray-300 focus:ring-2 focus:ring-orange-500">
                     <SelectValue placeholder="Select goal" />
                   </SelectTrigger>
@@ -125,7 +223,10 @@ export default function SignUpPage() {
                 <label className="text-sm text-gray-400 mb-1 block">
                   Risk Tolerance
                 </label>
-                <Select>
+                <Select
+                  onValueChange={(value) =>
+                    handleChange("riskTolerance", value)
+                  }>
                   <SelectTrigger className="bg-[#121212] w-full border border-[#222] text-gray-300 focus:ring-2 focus:ring-orange-500">
                     <SelectValue placeholder="Select risk level" />
                   </SelectTrigger>
@@ -142,7 +243,10 @@ export default function SignUpPage() {
                 <label className="text-sm text-gray-400 mb-1 block">
                   Preferred Industry
                 </label>
-                <Select>
+                <Select
+                  onValueChange={(value) =>
+                    handleChange("preferredIndustry", value)
+                  }>
                   <SelectTrigger className="bg-[#121212] w-full border border-[#222] text-gray-300 focus:ring-2 focus:ring-orange-500">
                     <SelectValue placeholder="Select industry" />
                   </SelectTrigger>
@@ -158,8 +262,11 @@ export default function SignUpPage() {
             </div>
 
             {/* Submit Button */}
-            <Button className="bg-orange-500 hover:bg-orange-600 text-white rounded-lg mt-4">
-              Sign Up
+            <Button
+              disabled={isLoading}
+              type="submit"
+              className="bg-orange-500 hover:bg-orange-600 text-white rounded-lg mt-4 flex justify-center items-center">
+              {isLoading ? <Loader2 /> : " Sign Up"}
             </Button>
           </form>
 
