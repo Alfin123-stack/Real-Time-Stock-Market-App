@@ -1,13 +1,57 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import { signInWithEmail } from "@/lib/actions/auth.actions";
+import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
 
 export default function SignInPage() {
+  const router = useRouter();
+  // 🧠 State untuk semua field
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [isLoading, setIsLoading] = useState(false);
+
+  // 🛠 Handler umum untuk Input dan Select
+  const handleChange = (field: string, value: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
+  // 📨 Nanti bisa dipakai kirim data ke server
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    try {
+      const { email, password } = formData;
+      const result = await signInWithEmail({ email, password });
+
+      if (!result.success) {
+        toast.error(result.error || "Invalid email or password");
+        return;
+      }
+
+      toast.success("Successfully signed in!");
+      router.replace("/");
+    } catch (error) {
+      console.error("Sign in error:", error);
+      toast.error("Unexpected error occurred.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <main className="min-h-screen grid grid-cols-1 lg:grid-cols-2 bg-[#0b0b0b] text-white">
       {/* 🧩 Left Section — Stock Market Theme */}
@@ -53,13 +97,14 @@ export default function SignInPage() {
             market data.
           </p>
 
-          <form className="flex flex-col gap-5">
+          <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
             <div>
               <label className="text-sm text-gray-400 mb-1 block">Email</label>
               <Input
                 type="email"
                 placeholder="you@stocks.io"
                 className="bg-[#121212] border border-[#222] focus:ring-2 focus:ring-orange-500"
+                onChange={(e) => handleChange("email", e.target.value)}
                 required
               />
             </div>
@@ -71,11 +116,15 @@ export default function SignInPage() {
                 type="password"
                 placeholder="••••••••"
                 className="bg-[#121212] border border-[#222] focus:ring-2 focus:ring-orange-500"
+                onChange={(e) => handleChange("password", e.target.value)}
                 required
               />
             </div>
-            <Button className="bg-orange-500 hover:bg-orange-600 text-white rounded-lg mt-2">
-              Sign In
+            <Button
+              className="bg-orange-500 hover:bg-orange-600 text-white rounded-lg mt-2 flex items-center justify-center"
+              type="submit"
+              disabled={isLoading}>
+              {isLoading ? <Loader2 /> : "Sign In"}
             </Button>
           </form>
 

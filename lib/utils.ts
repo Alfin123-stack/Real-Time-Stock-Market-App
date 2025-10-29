@@ -1,6 +1,26 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-
+type RawNewsArticle = {
+  id: number;
+  headline?: string;
+  summary?: string;
+  source?: string;
+  url?: string;
+  datetime?: number;
+  image?: string;
+  category?: string;
+  related?: string;
+};
+type Alert = {
+  id: string;
+  symbol: string;
+  company: string;
+  alertName: string;
+  currentPrice: number;
+  alertType: "upper" | "lower";
+  threshold: number;
+  changePercent?: number;
+};
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -137,3 +157,11 @@ export const getFormattedTodayDate = () =>
     day: "numeric",
     timeZone: "UTC",
   });
+
+export function formatTime(d: Date) {
+  return d.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  });
+}

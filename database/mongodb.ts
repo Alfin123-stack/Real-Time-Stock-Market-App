@@ -14,41 +14,48 @@ if (!MONGODB_URI) {
  * Cache connection untuk menghindari multiple connection saat development
  * karena Next.js reload modul pada setiap perubahan file.
  */
-let cached = (global as any).mongoose;
+type MongooseCache = {
+  conn: typeof mongoose | null;
+  promise: Promise<typeof mongoose> | null;
+};
+
+const globalWithMongoose = global as unknown as { mongoose?: MongooseCache };
+
+let cached = globalWithMongoose.mongoose;
 
 if (!cached) {
-  cached = (global as any).mongoose = { conn: null, promise: null };
+  cached = globalWithMongoose.mongoose = { conn: null, promise: null };
 }
 
 /**
  * Fungsi koneksi yang bisa dipanggil di mana saja (API route, action, server component)
  */
 export async function connectDB() {
-  if (cached.conn) {
+  if (cached?.conn) {
     // 🧠 Sudah ada koneksi aktif → langsung pakai cache
     return cached.conn;
   }
 
-  if (!cached.promise) {
+  if (!cached?.promise) {
     // 🧩 Buat koneksi baru jika belum ada
     const opts = {
       bufferCommands: false,
       maxPoolSize: 5,
     };
 
-    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+    cached!.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
       console.log("✅ MongoDB Connected");
       return mongoose;
     });
   }
 
   try {
-    cached.conn = await cached.promise;
+    cached!.conn = await cached!.promise;
   } catch (err) {
-    cached.promise = null;
+    cached!.promise = null;
     console.error("❌ MongoDB connection error:", err);
     throw err;
   }
 
-  return cached.conn;
+  return cached!.conn;
 }
