@@ -1,11 +1,8 @@
-// app/page.tsx
-"use client";
 
-import React, { useMemo } from "react";
-import { BarChart3, Users, Star, ShieldCheck } from "lucide-react";
+import type { Metadata } from "next";
+
 
 import Container from "@/components/Container";
-import { useLiveData } from "@/hooks/useLiveData";
 import TestimonialsSection from "./_components/TestimonialsSection";
 import PricingSection from "./_components/PricingSection";
 import CTASection from "./_components/CTASection";
@@ -14,38 +11,51 @@ import StockPreviewCard from "./_components/StockPreviewCard";
 import HeroSection from "./_components/HeroSection";
 import HeroContent from "./_components/HeroContent";
 
-/* ---------- main page ---------- */
-export default function Page() {
-  const live = useLiveData(24, 1500);
-
-  const stats = useMemo(
-    () => [
+/* ---------- ✅ SEO Metadata ---------- */
+export const metadata: Metadata = {
+  title: "Home", // otomatis jadi: "Home | Live Stock Prices, Charts & Market News"
+  description:
+    "Explore live stock prices, charts, and market insights in real time. Your all-in-one dashboard for smarter investing decisions.",
+  keywords: [
+    "stock market app",
+    "real-time stock data",
+    "live stock prices",
+    "market analysis",
+    "financial charts",
+    "investment dashboard",
+  ],
+  openGraph: {
+    title: "Home | Live Stock Prices, Charts & Market News",
+    description:
+      "Track real-time stock prices, analyze charts, and stay updated with market insights for smarter trading.",
+    url: "https://your-domain.com",
+    images: [
       {
-        title: "Aktif Users",
-        value: "12.4K",
-        icon: <Users className="h-5 w-5" />,
+        url: "/images/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Live Stock Market Dashboard",
       },
-      {
-        title: "Data Points / s",
-        value: "24",
-        icon: <BarChart3 className="h-5 w-5" />,
-      },
-      {
-        title: "Keamanan",
-        value: "AES-256",
-        icon: <ShieldCheck className="h-5 w-5" />,
-      },
-      { title: "Uptime", value: "99.99%", icon: <Star className="h-5 w-5" /> },
     ],
-    []
-  );
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Home | Live Stock Prices, Charts & Market News",
+    description:
+      "Monitor real-time stock prices and charts. Stay ahead with the latest market updates.",
+    images: ["/images/og-image.jpg"],
+  },
+};
+
+/* ---------- Main Page ---------- */
+export default function Page() {
 
   return (
     <Container>
       {/* HERO */}
       <HeroSection>
-        <HeroContent stats={stats} />
-        <StockPreviewCard data={live} />
+        <HeroContent />
+        <StockPreviewCard  />
       </HeroSection>
 
       {/* FEATURES */}
@@ -59,7 +69,6 @@ export default function Page() {
 
       {/* CTA */}
       <CTASection />
-
     </Container>
   );
 }

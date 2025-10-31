@@ -1,19 +1,34 @@
-import React from "react";
+"use client";
+import React, { useMemo } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
-type StatItem = {
-  title: string;
-  value: string;
-  icon: React.ReactNode;
-};
+import { BarChart3, Users, Star, ShieldCheck } from "lucide-react";
 
-interface HeroContentProps {
-  stats: StatItem[]; // ✅ array, bukan single object
-}
+function HeroContent() {
+  const stats = useMemo(
+    () => [
+      {
+        title: "Active Users",
+        value: "12.4K",
+        icon: <Users className="h-5 w-5" />,
+      },
+      {
+        title: "Data Points / s",
+        value: "24",
+        icon: <BarChart3 className="h-5 w-5" />,
+      },
+      {
+        title: "Security",
+        value: "AES-256",
+        icon: <ShieldCheck className="h-5 w-5" />,
+      },
+      { title: "Uptime", value: "99.99%", icon: <Star className="h-5 w-5" /> },
+    ],
+    []
+  );
 
-function HeroContent({ stats }: HeroContentProps) {
   return (
     <motion.div
       initial={{ opacity: 0, x: -30 }}

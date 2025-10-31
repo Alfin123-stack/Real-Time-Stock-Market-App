@@ -6,20 +6,11 @@ import StockCard from "./StockCard";
 import { StockItem } from "../page";
 interface MarketSectionProps {
   results: StockItem[];
-  loading: boolean;
 }
 
 export default function MarketListSection({
   results,
-  loading,
 }: MarketSectionProps) {
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-[60vh] text-slate-500">
-        Loading market data...
-      </div>
-    );
-  }
 
   return (
     <motion.section

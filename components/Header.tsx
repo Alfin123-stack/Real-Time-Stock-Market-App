@@ -25,17 +25,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { usePathname } from "next/navigation";
 
 export default function Header({ username }: { username?: string | null }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const pathname = usePathname();
+
   const navLinks = [
     { href: "/dashboard", label: "Dashboard" },
     { href: "/markets", label: "Markets" },
-    { href: "/portfolio", label: "Portfolio" },
     { href: "/news", label: "News" },
-    { href: "/settings", label: "Settings" },
   ];
 
   const handleLogout = async () => {
@@ -71,14 +72,22 @@ export default function Header({ username }: { username?: string | null }) {
 
         {/* --- Desktop Navigation --- */}
         <nav className="hidden md:flex items-center gap-6">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="text-slate-400 hover:text-orange-400 transition font-medium">
-              {link.label}
-            </Link>
-          ))}
+          {navLinks.map((link) => {
+            const isActive = pathname === link.href;
+
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`font-medium transition ${
+                  isActive
+                    ? "text-orange-400 border-b-2 border-orange-400 pb-1"
+                    : "text-slate-400 hover:text-orange-400"
+                }`}>
+                {link.label}
+              </Link>
+            );
+          })}
         </nav>
 
         {/* --- Right Section --- */}
@@ -90,42 +99,46 @@ export default function Header({ username }: { username?: string | null }) {
               {/* --- User Dropdown --- */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button className="flex items-center gap-2 hover:text-orange-400 p-2">
+                  <Button className="flex items-center gap-2 p-2 text-slate-300 bg-transparent hover:text-orange-400 hover:bg-transparent">
                     <User className="h-8 w-8" />
                     <span className="hidden sm:inline">Details</span>
-                    <ChevronDown className="h-4 w-4 hover:text-orange-400" />
+                    <ChevronDown className="h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
 
                 <DropdownMenuContent
                   align="end"
-                  className="w-48 bg-[#111] border border-slate-800 text-slate-300 shadow-lg">
-                  <DropdownMenuLabel className="text-orange-400">
+                  className="w-52 bg-[#0d0d0d] border border-slate-800 text-slate-300 shadow-xl rounded-xl backdrop-blur-sm">
+                  <DropdownMenuLabel className="text-orange-400 font-semibold tracking-wide">
                     My Account
                   </DropdownMenuLabel>
+
                   <DropdownMenuSeparator className="bg-slate-800" />
-                  <DropdownMenuItem asChild>
-                    <div className="flex items-center gap-2 hover:bg-none hover:text-orange-400">
-                      {" "}
-                      <User className="h-4 w-4" />
-                      <span>{username}</span>
-                    </div>
+
+                  <DropdownMenuItem
+                    className="flex items-center gap-2 px-3 py-2 text-slate-300 
+                 hover:text-orange-400 hover:bg-[#1a1a1a] transition-colors duration-150 rounded-md">
+                    <User className="h-4 w-4 text-slate-400" />
+                    <span>{username}</span>
                   </DropdownMenuItem>
+
                   <DropdownMenuSeparator className="bg-slate-800" />
+
                   <DropdownMenuItem
                     onClick={handleLogout}
                     disabled={isLoading}
-                    className="text-red-400 focus:text-red-500 cursor-pointer">
+                    className="flex items-center gap-2 px-3 py-2 text-red-400 
+                 hover:text-red-500 hover:bg-[#1a1a1a] transition-colors duration-150 rounded-md cursor-pointer">
                     {isLoading ? (
                       <div className="flex items-center gap-2">
                         <Loader2 className="h-4 w-4 animate-spin" />
                         <span>Logging out...</span>
                       </div>
                     ) : (
-                      <div className="flex items-center gap-2">
+                      <>
                         <LogOut className="h-4 w-4" />
                         <span>Logout</span>
-                      </div>
+                      </>
                     )}
                   </DropdownMenuItem>
                 </DropdownMenuContent>

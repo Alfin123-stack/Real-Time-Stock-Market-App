@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { motion } from "framer-motion";
 import {
@@ -9,17 +10,10 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { useLiveData } from "@/hooks/useLiveData";
 
-interface DataPoint {
-  t: string;
-  v: number;
-}
-
-interface StockPreviewCardProps {
-  data: DataPoint[];
-}
-
-function StockPreviewCard({ data }: StockPreviewCardProps) {
+function StockPreviewCard() {
+  const live = useLiveData(24, 1500);
   return (
     <motion.aside
       initial={{ opacity: 0, x: 30 }}
@@ -44,7 +38,7 @@ function StockPreviewCard({ data }: StockPreviewCardProps) {
         <div className="mt-6 h-56">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
-              data={data}
+              data={live}
               margin={{ top: 0, right: 10, left: 0, bottom: 0 }}>
               <CartesianGrid stroke="#111827" vertical={false} />
               <XAxis dataKey="t" axisLine={false} tick={{ fill: "#94a3b8" }} />
