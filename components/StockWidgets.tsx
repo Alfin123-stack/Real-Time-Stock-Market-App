@@ -1,4 +1,3 @@
-// StockWidgets.jsx
 "use client";
 
 import React, { useEffect, useRef, memo } from "react";
@@ -21,13 +20,23 @@ const DEFAULT_DIMENSIONS = {
   symbolProfile: { width: 400, height: 550 },
 };
 
+/* ✅ Definisikan tipe props agar tidak any */
+type WidgetType = keyof typeof WIDGET_CONFIG;
+
+interface StockWidgetsProps {
+  symbol?: string;
+  type?: WidgetType;
+  width?: number | string;
+  height?: number | string;
+}
+
 function StockWidgets({
   symbol = "NASDAQ:AAPL",
   type = "symbolInfo",
   width,
   height,
-}) {
-  const container = useRef();
+}: StockWidgetsProps) {
+  const container = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!container.current || !WIDGET_CONFIG[type]) return;
@@ -40,7 +49,18 @@ function StockWidgets({
     const widgetWidth = width || DEFAULT_DIMENSIONS[type].width;
     const widgetHeight = height || DEFAULT_DIMENSIONS[type].height;
 
-    const config = {
+    const config: {
+      symbol: string;
+      colorTheme: "light" | "dark";
+      isTransparent: boolean;
+      locale: string;
+      width: number | string;
+      height: number | string;
+      displayMode?: "single" | "adaptive";
+      interval?: string;
+      disableInterval?: boolean;
+      showIntervalTabs?: boolean;
+    } = {
       symbol,
       colorTheme: "dark",
       isTransparent: false,

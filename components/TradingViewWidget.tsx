@@ -12,7 +12,7 @@ function TradingViewWidget({
   width = "100%",
   height = "550",
 }) {
-  const container = useRef(null);
+  const container = useRef<HTMLDivElement | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

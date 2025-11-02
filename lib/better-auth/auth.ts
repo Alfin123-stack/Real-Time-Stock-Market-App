@@ -2,6 +2,7 @@ import { connectDB } from "@/database/mongodb";
 import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import { nextCookies } from "better-auth/next-js";
+import type { Db } from "mongodb"; // ⬅️ tambahkan tipe Db dari driver MongoDB
 
 let authInstance: ReturnType<typeof betterAuth> | null = null;
 
@@ -9,12 +10,12 @@ export const getAuth = async () => {
   if (authInstance) return authInstance;
 
   const mongoose = await connectDB();
-  const db = mongoose.connection.db;
+  const db: Db | undefined = mongoose.connection.db;
 
   if (!db) throw new Error("MongoDB connection not found");
 
   authInstance = betterAuth({
-    database: mongodbAdapter(db as any),
+    database: mongodbAdapter(db), // ✅ langsung kirim Db, tanpa casting
     secret: process.env.BETTER_AUTH_SECRET,
     baseURL: process.env.BETTER_AUTH_URL,
     emailAndPassword: {

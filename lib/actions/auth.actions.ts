@@ -60,22 +60,26 @@ export const signInWithEmail = async ({ email, password }: SignInFormData) => {
       body: { email, password },
     });
 
-    // ⚠️ Better Auth mengembalikan objek, bukan throw error otomatis
-    if (!response || response.error || !response.user) {
-      throw new Error(response?.error || "Invalid email or password");
+    if (!response?.user) {
+      throw new Error("Invalid email or password");
     }
 
     return { success: true, data: response };
-  } catch (e: any) {
-    console.log("Sign in failed:", e.message);
-    return { success: false, error: e.message || "Sign in failed" };
+  } catch (e) {
+    if (e instanceof Error) {
+      console.log("Sign in failed:", e.message);
+      return { success: false, error: e.message };
+    }
+
+    console.log("Sign in failed:", e);
+    return { success: false, error: "Sign in failed" };
   }
 };
 
 export const signOut = async () => {
   try {
     // Hapus session di server Better Auth
-    const res = await auth.api.signOut({
+    await auth.api.signOut({
       headers: await headers(),
     });
 
