@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📈 REAL-TIME-STOCK-MARKET-APP  
+**Track market trends instantly; visualize data in real-time.**
 
-## Getting Started
+---
 
-First, run the development server:
+## 📖 Overview  
+**Real-Time Stock Market App** is a modern **Next.js 15** application designed to display and analyze live stock market data with interactive visualizations and a seamless user experience.  
+Built with **React 19**, **TypeScript**, and **TailwindCSS 4**, it integrates real-time updates, animations, and clean UI components for financial insights.
 
+This project emphasizes scalability, real-time performance, and beautiful design for monitoring stock movements efficiently.
+
+### It combines:
+- 📊 **Real-time stock tracking** and chart visualization using **Recharts**  
+- ⚙️ **Next.js 15** with **Turbopack** for fast rendering and builds  
+- 🧠 **TypeScript** for type-safe and maintainable code  
+- 💾 **MongoDB + Mongoose** for data persistence and caching  
+- 🔐 **Better Auth** for authentication and secure access  
+- ✉️ **Nodemailer** for email alerts or notifications  
+- 🎨 **TailwindCSS v4**, **Radix UI**, and **Framer Motion** for a modern, responsive interface  
+- 🌗 **Next-Themes** for light/dark mode support  
+- ⚡ **Inngest** for event-driven background processes and automation  
+
+---
+
+## ✨ Features
+- 📈 Live stock market data updates  
+- 🔍 Search and filter by stock symbols or categories  
+- 🧭 Interactive charts and analytics  
+- 🔐 Secure login system with **Better Auth**  
+- 🌙 Dark and light theme support  
+- 📧 Email notifications with **Nodemailer**  
+- 💾 Persistent data storage using **MongoDB**  
+- 🎨 Beautiful and accessible UI with **TailwindCSS** and **Radix UI**  
+
+---
+
+## 🏗 Tech Stack
+
+### **Frontend**
+- Next.js 15 + React 19  
+- TypeScript + TailwindCSS 4 + Radix UI + Framer Motion  
+
+### **Backend**
+- Next.js API Routes  
+- MongoDB + Mongoose  
+- Inngest (background jobs & automation)  
+- Nodemailer  
+
+### **Authentication**
+- Better Auth  
+
+### **Data Visualization**
+- Recharts  
+
+---
+
+## ⚡ Getting Started
+
+### ✅ Prerequisites
+Make sure you have installed:
+- Node.js ≥ 18  
+- npm or yarn  
+- MongoDB (local or Atlas instance)
+
+### 📥 Installation
 ```bash
+git clone https://github.com/your-username/real-time-stock-market-app.git
+cd real-time-stock-market-app
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
