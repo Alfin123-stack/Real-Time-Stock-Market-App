@@ -1,68 +1,81 @@
 # 📈 REAL-TIME-STOCK-MARKET-APP  
-**Track market trends instantly; visualize data in real-time.**
+Uncover Market Insights Instantly; Visualize Data in Real-Time  
+
+![last commit](https://img.shields.io/github/last-commit/your-username/real-time-stock-market-app?color=green&label=last%20commit)  
+![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=nextdotjs)  
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)  
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)  
+![Database](https://img.shields.io/badge/Database-MongoDB-green?logo=mongodb)  
+![Auth](https://img.shields.io/badge/Auth-BetterAuth-orange)  
+![Email](https://img.shields.io/badge/Email-Nodemailer-yellow)  
+![UI](https://img.shields.io/badge/UI-TailwindCSS%20v4-blue?logo=tailwindcss)  
+![License](https://img.shields.io/badge/license-MIT-lightgrey)  
 
 ---
 
 ## 📖 Overview  
-**Real-Time Stock Market App** is a modern **Next.js 15** application designed to display and analyze live stock market data with interactive visualizations and a seamless user experience.  
-Built with **React 19**, **TypeScript**, and **TailwindCSS 4**, it integrates real-time updates, animations, and clean UI components for financial insights.
 
-This project emphasizes scalability, real-time performance, and beautiful design for monitoring stock movements efficiently.
+**Real-Time Stock Market App** is a modern **Next.js 15** application built to track and visualize live stock market data with responsive UI, smooth animations, and real-time updates.  
+Powered by **React 19**, **TypeScript**, and **TailwindCSS v4**, it provides scalable performance, beautiful visuals, and reliable data integration for financial insights.
 
-### It combines:
-- 📊 **Real-time stock tracking** and chart visualization using **Recharts**  
-- ⚙️ **Next.js 15** with **Turbopack** for fast rendering and builds  
-- 🧠 **TypeScript** for type-safe and maintainable code  
-- 💾 **MongoDB + Mongoose** for data persistence and caching  
-- 🔐 **Better Auth** for authentication and secure access  
-- ✉️ **Nodemailer** for email alerts or notifications  
-- 🎨 **TailwindCSS v4**, **Radix UI**, and **Framer Motion** for a modern, responsive interface  
-- 🌗 **Next-Themes** for light/dark mode support  
-- ⚡ **Inngest** for event-driven background processes and automation  
+It combines:
+
+- 📊 **Real-time stock tracking** and analytics with Recharts  
+- ⚙️ **Scalable architecture** using Next.js API routes and MongoDB  
+- 🔐 **Authentication & security** powered by Better Auth  
+- ✉️ **Nodemailer** integration for notifications and alerts  
+- 🌙 **Light & dark mode** support via Next-Themes  
+- 🎨 **Modern UI/UX** with TailwindCSS v4, Radix UI, and Framer Motion  
+- ⚡ **Inngest** for background jobs and event automation  
+- 🧠 **Type-safe development** with TypeScript for maintainability  
+
+💡 *This project is ideal for fintech dashboards, trading platforms, and real-time data-driven applications.*
 
 ---
 
-## ✨ Features
-- 📈 Live stock market data updates  
+## ✨ Features  
+
+- 📈 Live stock market data visualization  
 - 🔍 Search and filter by stock symbols or categories  
-- 🧭 Interactive charts and analytics  
-- 🔐 Secure login system with **Better Auth**  
-- 🌙 Dark and light theme support  
-- 📧 Email notifications with **Nodemailer**  
-- 💾 Persistent data storage using **MongoDB**  
-- 🎨 Beautiful and accessible UI with **TailwindCSS** and **Radix UI**  
+- 🧭 Interactive and responsive chart dashboards  
+- 🔐 Secure login system with Better Auth  
+- 🌙 Light and dark theme toggle  
+- 📧 Email alerts using Nodemailer  
+- 💾 Persistent data handling with MongoDB + Mongoose  
+- 🎨 Modern interface with Radix UI and TailwindCSS v4  
+- ⚡ Smooth animations powered by Framer Motion  
 
 ---
 
-## 🏗 Tech Stack
+## 🏗 Tech Stack  
 
-### **Frontend**
+**Frontend**  
 - Next.js 15 + React 19  
-- TypeScript + TailwindCSS 4 + Radix UI + Framer Motion  
+- TypeScript + TailwindCSS v4 + Radix UI + Framer Motion  
 
-### **Backend**
+**Backend**  
 - Next.js API Routes  
 - MongoDB + Mongoose  
-- Inngest (background jobs & automation)  
-- Nodemailer  
+- Inngest for event-driven tasks  
+- Nodemailer for emails  
 
-### **Authentication**
+**Auth**  
 - Better Auth  
 
-### **Data Visualization**
+**Data Visualization**  
 - Recharts  
 
 ---
 
-## ⚡ Getting Started
+## ⚡ Getting Started  
 
-### ✅ Prerequisites
-Make sure you have installed:
+### ✅ Prerequisites  
+Ensure you have installed:
 - Node.js ≥ 18  
 - npm or yarn  
-- MongoDB (local or Atlas instance)
+- MongoDB (local or Atlas)
 
-### 📥 Installation
+### 📥 Installation  
 ```bash
 git clone https://github.com/your-username/real-time-stock-market-app.git
 cd real-time-stock-market-app
