@@ -1,100 +1,21 @@
 "use client";
 
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
 import Link from "next/link";
-import { signInWithEmail, signUpWithEmail } from "@/lib/actions/auth.actions";
 import AuthField from "./AuthField";
+import { useAuthForm } from "@/hooks/useAuthForm";
 
 interface AuthFormProps {
   mode: "signin" | "signup";
 }
 
 export default function AuthForm({ mode }: AuthFormProps) {
-  const router = useRouter();
-  const isSignUp = mode === "signup";
-
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    password: "",
-    country: "",
-    investmentGoals: "",
-    riskTolerance: "",
-    preferredIndustry: "",
-  });
-
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleChange = (field: keyof typeof formData, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-  };
-
-  const validateForm = () => {
-    if (!formData.email.includes("@")) {
-      toast.error("Please enter a valid email address");
-      return false;
-    }
-    if (formData.password.length < 8) {
-      toast.error("Password must be at least 8 characters");
-      return false;
-    }
-
-    if (isSignUp) {
-      if (!formData.fullName.trim())
-        return toast.error("Full name is required");
-      if (!formData.country) return toast.error("Please select your country");
-      if (!formData.investmentGoals)
-        return toast.error("Please select your investment goals");
-      if (!formData.riskTolerance)
-        return toast.error("Please select your risk tolerance");
-      if (!formData.preferredIndustry)
-        return toast.error("Please select your preferred industry");
-    }
-
-    return true;
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!validateForm()) return;
-
-    setIsLoading(true);
-    try {
-      if (isSignUp) {
-        const result = await signUpWithEmail(formData);
-        if (!result.success) {
-          toast.error(result.error || "Failed to create account");
-          return;
-        }
-        toast.success("Account created successfully!");
-      } else {
-        const result = await signInWithEmail({
-          email: formData.email,
-          password: formData.password,
-        });
-        if (!result.success) {
-          toast.error(result.error || "Invalid email or password");
-          return;
-        }
-        toast.success("Successfully signed in!");
-      }
-
-      router.replace("/");
-    } catch (err) {
-      console.error(err);
-      toast.error("Unexpected error occurred");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const { formData, handleChange, handleSubmit, isLoading, isSignUp } =
+    useAuthForm(mode);
 
   return (
     <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
-      {/* 🟩 Sign Up → grid dua kolom */}
       {isSignUp ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <AuthField
@@ -176,7 +97,6 @@ export default function AuthForm({ mode }: AuthFormProps) {
           />
         </div>
       ) : (
-        /* 🟧 Sign In → satu kolom */
         <>
           <AuthField
             label="Email"
@@ -186,7 +106,6 @@ export default function AuthForm({ mode }: AuthFormProps) {
             value={formData.email}
             onChange={(val) => handleChange("email", val)}
           />
-
           <AuthField
             label="Password"
             type="password"
