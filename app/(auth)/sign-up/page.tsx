@@ -20,7 +20,7 @@ import { Loader2 } from "lucide-react";
 
 export default function SignUpPage() {
   const router = useRouter();
-  // 🧠 State untuk semua field
+
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -30,6 +30,7 @@ export default function SignUpPage() {
     riskTolerance: "",
     preferredIndustry: "",
   });
+
   const [isLoading, setIsLoading] = useState(false);
 
   // 🛠 Handler umum untuk Input dan Select
@@ -40,45 +41,86 @@ export default function SignUpPage() {
     }));
   };
 
-  // 📨 Nanti bisa dipakai kirim data ke server
+  // ✅ Validasi sisi client
+  const validateForm = () => {
+    const {
+      fullName,
+      email,
+      password,
+      country,
+      investmentGoals,
+      riskTolerance,
+      preferredIndustry,
+    } = formData;
+
+    if (!fullName || !email || !password) {
+      toast.error("Please fill in all required fields.");
+      return false;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      toast.error("Please enter a valid email address.");
+      return false;
+    }
+
+    if (password.length < 8) {
+      toast.error("Password must be at least 8 characters long.");
+      return false;
+    }
+
+    if (!country) {
+      toast.error("Please select your country.");
+      return false;
+    }
+
+    if (!investmentGoals) {
+      toast.error("Please select your investment goals.");
+      return false;
+    }
+
+    if (!riskTolerance) {
+      toast.error("Please select your risk tolerance.");
+      return false;
+    }
+
+    if (!preferredIndustry) {
+      toast.error("Please select your preferred industry.");
+      return false;
+    }
+
+    return true;
+  };
+
+  // 📨 Kirim data ke server
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form Data:", formData);
+
+    // 🔍 Jalankan validasi dulu
+    if (!validateForm()) return;
 
     setIsLoading(true);
     try {
-      const {
-        fullName,
-        email,
-        password,
-        country,
-        investmentGoals,
-        riskTolerance,
-        preferredIndustry,
-      } = formData;
+      const result = await signUpWithEmail(formData);
 
-      await signUpWithEmail({
-        fullName,
-        email,
-        password,
-        country,
-        investmentGoals,
-        riskTolerance,
-        preferredIndustry,
-      });
-      toast("Account created successfully!");
+      if (!result.success) {
+        toast.error(result.error || "Failed to create account.");
+        return;
+      }
+
+      toast.success("Account created successfully!");
       router.replace("/");
     } catch (error) {
       console.error("Sign up error:", error);
-      toast("Failed to create account. Please try again.");
+      toast.error("Failed to create account. Please try again.");
     } finally {
-      setIsLoading(true);
+      setIsLoading(false);
     }
   };
 
   return (
     <main className="min-h-screen grid grid-cols-1 lg:grid-cols-2 bg-[#0b0b0b] text-white">
-      {/* 🧩 Left Section — Illustration */}
+      {/* Left Section */}
       <div className="relative hidden lg:flex items-center justify-center bg-gradient-to-br from-[#101010] via-[#0a0a0a] to-black">
         <div className="absolute inset-0">
           <Image
@@ -105,7 +147,7 @@ export default function SignUpPage() {
         </motion.div>
       </div>
 
-      {/* 🧾 Right Section — Sign Up Form */}
+      {/* Right Section */}
       <div className="flex flex-col justify-center px-8 sm:px-16 lg:px-24 py-12 bg-[#0b0b0b]">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -119,154 +161,94 @@ export default function SignUpPage() {
             Sign up to access real-time stock market analytics and insights.
           </p>
 
-          {/* Form Grid Layout */}
           <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {/* Full Name */}
-              <div>
-                <label className="text-sm text-gray-400 mb-1 block">
-                  Full Name
-                </label>
-                <Input
-                  type="text"
-                  placeholder="John Trader"
-                  value={formData.fullName}
-                  onChange={(e) => handleChange("fullName", e.target.value)}
-                  className="bg-[#121212] border border-[#222] focus:ring-2 focus:ring-orange-500"
-                  required
-                />
-              </div>
+              <InputField
+                label="Full Name"
+                type="text"
+                placeholder="John Trader"
+                value={formData.fullName}
+                onChange={(e) => handleChange("fullName", e.target.value)}
+              />
 
               {/* Email */}
-              <div>
-                <label className="text-sm text-gray-400 mb-1 block">
-                  Email
-                </label>
-                <Input
-                  type="email"
-                  placeholder="you@stocks.io"
-                  value={formData.email}
-                  onChange={(e) => handleChange("email", e.target.value)}
-                  className="bg-[#121212] border border-[#222] focus:ring-2 focus:ring-orange-500"
-                  required
-                />
-              </div>
+              <InputField
+                label="Email"
+                type="email"
+                placeholder="you@stocks.io"
+                value={formData.email}
+                onChange={(e) => handleChange("email", e.target.value)}
+              />
 
               {/* Password */}
-              <div>
-                <label className="text-sm text-gray-400 mb-1 block">
-                  Password
-                </label>
-                <Input
-                  type="password"
-                  placeholder="••••••••"
-                  value={formData.password}
-                  onChange={(e) => handleChange("password", e.target.value)}
-                  className="bg-[#121212] border border-[#222] focus:ring-2 focus:ring-orange-500"
-                  required
-                />
-              </div>
+              <InputField
+                label="Password"
+                type="password"
+                placeholder="••••••••"
+                value={formData.password}
+                onChange={(e) => handleChange("password", e.target.value)}
+              />
 
-              {/* 🌍 Country */}
-              <div>
-                <label className="text-sm text-gray-400 mb-1 block">
-                  Country
-                </label>
-                <Select
-                  onValueChange={(value) => handleChange("country", value)}>
-                  <SelectTrigger className="bg-[#121212] w-full border border-[#222] text-gray-300 focus:ring-2 focus:ring-orange-500">
-                    <SelectValue
-                      placeholder="Select country"
-                      defaultValue={formData.country}
-                    />
-                  </SelectTrigger>
-                  <SelectContent className="bg-[#121212] text-gray-200 border border-[#222]">
-                    <SelectItem value="us">🇺🇸 United States</SelectItem>
-                    <SelectItem value="uk">🇬🇧 United Kingdom</SelectItem>
-                    <SelectItem value="ca">🇨🇦 Canada</SelectItem>
-                    <SelectItem value="jp">🇯🇵 Japan</SelectItem>
-                    <SelectItem value="id">🇮🇩 Indonesia</SelectItem>
-                    <SelectItem value="sg">🇸🇬 Singapore</SelectItem>
-                    <SelectItem value="de">🇩🇪 Germany</SelectItem>
-                    <SelectItem value="fr">🇫🇷 France</SelectItem>
-                    <SelectItem value="au">🇦🇺 Australia</SelectItem>
-                    <SelectItem value="in">🇮🇳 India</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+              {/* Country */}
+              <SelectField
+                label="Country"
+                value={formData.country}
+                onValueChange={(v) => handleChange("country", v)}
+                options={[
+                  ["us", "🇺🇸 United States"],
+                  ["uk", "🇬🇧 United Kingdom"],
+                  ["id", "🇮🇩 Indonesia"],
+                  ["jp", "🇯🇵 Japan"],
+                  ["sg", "🇸🇬 Singapore"],
+                ]}
+              />
 
               {/* Investment Goals */}
-              <div>
-                <label className="text-sm text-gray-400 mb-1 block">
-                  Investment Goals
-                </label>
-                <Select
-                  onValueChange={(value) =>
-                    handleChange("investmentGoals", value)
-                  }>
-                  <SelectTrigger className="bg-[#121212] w-full border border-[#222] text-gray-300 focus:ring-2 focus:ring-orange-500">
-                    <SelectValue placeholder="Select goal" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-[#121212] text-gray-200 border border-[#222]">
-                    <SelectItem value="growth">Long-Term Growth</SelectItem>
-                    <SelectItem value="income">Steady Income</SelectItem>
-                    <SelectItem value="trading">Short-Term Trading</SelectItem>
-                    <SelectItem value="diversify">
-                      Portfolio Diversification
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+              <SelectField
+                label="Investment Goals"
+                value={formData.investmentGoals}
+                onValueChange={(v) => handleChange("investmentGoals", v)}
+                options={[
+                  ["growth", "Long-Term Growth"],
+                  ["income", "Steady Income"],
+                  ["trading", "Short-Term Trading"],
+                  ["diversify", "Portfolio Diversification"],
+                ]}
+              />
 
               {/* Risk Tolerance */}
-              <div>
-                <label className="text-sm text-gray-400 mb-1 block">
-                  Risk Tolerance
-                </label>
-                <Select
-                  onValueChange={(value) =>
-                    handleChange("riskTolerance", value)
-                  }>
-                  <SelectTrigger className="bg-[#121212] w-full border border-[#222] text-gray-300 focus:ring-2 focus:ring-orange-500">
-                    <SelectValue placeholder="Select risk level" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-[#121212] text-gray-200 border border-[#222]">
-                    <SelectItem value="low">Low</SelectItem>
-                    <SelectItem value="moderate">Moderate</SelectItem>
-                    <SelectItem value="high">High</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+              <SelectField
+                label="Risk Tolerance"
+                value={formData.riskTolerance}
+                onValueChange={(v) => handleChange("riskTolerance", v)}
+                options={[
+                  ["low", "Low"],
+                  ["moderate", "Moderate"],
+                  ["high", "High"],
+                ]}
+              />
 
               {/* Preferred Industry */}
-              <div>
-                <label className="text-sm text-gray-400 mb-1 block">
-                  Preferred Industry
-                </label>
-                <Select
-                  onValueChange={(value) =>
-                    handleChange("preferredIndustry", value)
-                  }>
-                  <SelectTrigger className="bg-[#121212] w-full border border-[#222] text-gray-300 focus:ring-2 focus:ring-orange-500">
-                    <SelectValue placeholder="Select industry" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-[#121212] text-gray-200 border border-[#222]">
-                    <SelectItem value="tech">Technology</SelectItem>
-                    <SelectItem value="finance">Finance</SelectItem>
-                    <SelectItem value="health">Healthcare</SelectItem>
-                    <SelectItem value="energy">Energy</SelectItem>
-                    <SelectItem value="consumer">Consumer Goods</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+              <SelectField
+                label="Preferred Industry"
+                value={formData.preferredIndustry}
+                onValueChange={(v) => handleChange("preferredIndustry", v)}
+                options={[
+                  ["tech", "Technology"],
+                  ["finance", "Finance"],
+                  ["health", "Healthcare"],
+                  ["energy", "Energy"],
+                  ["consumer", "Consumer Goods"],
+                ]}
+              />
             </div>
 
-            {/* Submit Button */}
             <Button
               disabled={isLoading}
               type="submit"
               className="bg-orange-500 hover:bg-orange-600 text-white rounded-lg mt-4 flex justify-center items-center">
-              {isLoading ? <Loader2 /> : " Sign Up"}
+              {isLoading ? <Loader2 className="animate-spin" /> : "Sign Up"}
             </Button>
           </form>
 
@@ -281,5 +263,64 @@ export default function SignUpPage() {
         </motion.div>
       </div>
     </main>
+  );
+}
+
+/* 🔧 Reusable Components */
+function InputField({
+  label,
+  type,
+  placeholder,
+  value,
+  onChange,
+}: {
+  label: string;
+  type: string;
+  placeholder: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}) {
+  return (
+    <div>
+      <label className="text-sm text-gray-400 mb-1 block">{label}</label>
+      <Input
+        type={type}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        className="bg-[#121212] border border-[#222] focus:ring-2 focus:ring-orange-500"
+        required
+      />
+    </div>
+  );
+}
+
+function SelectField({
+  label,
+  value,
+  onValueChange,
+  options,
+}: {
+  label: string;
+  value: string;
+  onValueChange: (val: string) => void;
+  options: [string, string][];
+}) {
+  return (
+    <div>
+      <label className="text-sm text-gray-400 mb-1 block">{label}</label>
+      <Select onValueChange={onValueChange} value={value}>
+        <SelectTrigger className="bg-[#121212] w-full border border-[#222] text-gray-300 focus:ring-2 focus:ring-orange-500">
+          <SelectValue placeholder={`Select ${label.toLowerCase()}`} />
+        </SelectTrigger>
+        <SelectContent className="bg-[#121212] text-gray-200 border border-[#222]">
+          {options.map(([val, label]) => (
+            <SelectItem key={val} value={val}>
+              {label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
   );
 }

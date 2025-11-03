@@ -13,28 +13,35 @@ import { Loader2 } from "lucide-react";
 
 export default function SignInPage() {
   const router = useRouter();
-  // 🧠 State untuk semua field
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
   const [isLoading, setIsLoading] = useState(false);
 
-  // 🛠 Handler umum untuk Input dan Select
-  const handleChange = (field: string, value: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
+  const handleChange = (field: keyof typeof formData, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  // 📨 Nanti bisa dipakai kirim data ke server
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
 
+    const { email, password } = formData;
+
+    // Basic validation
+    if (!email.includes("@")) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
+    if (password.length < 6) {
+      toast.error("Password must be at least 6 characters");
+      return;
+    }
+
+    setIsLoading(true);
     try {
-      const { email, password } = formData;
       const result = await signInWithEmail({ email, password });
 
       if (!result.success) {
@@ -46,7 +53,7 @@ export default function SignInPage() {
       router.replace("/");
     } catch (error) {
       console.error("Sign in error:", error);
-      toast.error("Unexpected error occurred.");
+      toast.error("Unexpected error occurred. Please try again later.");
     } finally {
       setIsLoading(false);
     }
@@ -54,20 +61,16 @@ export default function SignInPage() {
 
   return (
     <main className="min-h-screen grid grid-cols-1 lg:grid-cols-2 bg-[#0b0b0b] text-white">
-      {/* 🧩 Left Section — Stock Market Theme */}
+      {/* Left Section */}
       <div className="relative hidden lg:flex items-center justify-center bg-gradient-to-br from-[#101010] via-[#0a0a0a] to-black overflow-hidden">
-        <div className="absolute inset-0">
-          <Image
-            src="/images/auth.jpg"
-            alt="Trading dashboard"
-            fill
-            priority
-            className="object-cover object-center opacity-90"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
-        </div>
-
-        {/* Overlay text */}
+        <Image
+          src="/images/auth.jpg"
+          alt="Trading dashboard"
+          fill
+          priority
+          className="object-cover object-center opacity-90"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -82,7 +85,7 @@ export default function SignInPage() {
         </motion.div>
       </div>
 
-      {/* 🧾 Right Section — Sign In Form */}
+      {/* Right Section */}
       <div className="flex flex-col justify-center px-8 sm:px-16 lg:px-24 py-12 bg-[#0b0b0b] min-h-screen">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -102,29 +105,42 @@ export default function SignInPage() {
               <label className="text-sm text-gray-400 mb-1 block">Email</label>
               <Input
                 type="email"
+                autoComplete="email"
                 placeholder="you@stocks.io"
                 className="bg-[#121212] border border-[#222] focus:ring-2 focus:ring-orange-500"
+                value={formData.email}
                 onChange={(e) => handleChange("email", e.target.value)}
                 required
               />
             </div>
+
             <div>
               <label className="text-sm text-gray-400 mb-1 block">
                 Password
               </label>
               <Input
                 type="password"
+                autoComplete="current-password"
                 placeholder="••••••••"
                 className="bg-[#121212] border border-[#222] focus:ring-2 focus:ring-orange-500"
+                value={formData.password}
                 onChange={(e) => handleChange("password", e.target.value)}
                 required
               />
             </div>
+
             <Button
               className="bg-orange-500 hover:bg-orange-600 text-white rounded-lg mt-2 flex items-center justify-center"
               type="submit"
               disabled={isLoading}>
-              {isLoading ? <Loader2 /> : "Sign In"}
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Signing in...
+                </>
+              ) : (
+                "Sign In"
+              )}
             </Button>
           </form>
 
