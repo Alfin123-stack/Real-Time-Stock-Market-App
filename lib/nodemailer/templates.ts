@@ -5,7 +5,7 @@ export const WELCOME_EMAIL_TEMPLATE = `<!DOCTYPE html>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="format-detection" content="telephone=no">
     <meta name="x-apple-disable-message-reformatting">
-    <title>Welcome to Signalist</title>
+    <title>Welcome to RTStock</title>
     <!--[if mso]>
     <noscript>
         <xml>
@@ -97,65 +97,145 @@ export const WELCOME_EMAIL_TEMPLATE = `<!DOCTYPE html>
                     <!-- Header with Logo -->
                     <tr>
                         <td align="left" class="mobile-header-padding" style="padding: 40px 40px 20px 40px;">
-                            <img src="https://ik.imagekit.io/a6fkjou7d/logo.png?updatedAt=1756378431634" alt="Signalist Logo" width="150" style="max-width: 100%; height: auto;">
+                            <img src="https://res.cloudinary.com/damvrr929/image/upload/v1762137337/logo_nlxnpf.png" alt="RTStock Logo" width="150" style="max-width: 100%; height: auto;">
                         </td>
                     </tr>
                     
                     <!-- Dashboard Preview Image -->
                     <tr>
                         <td align="center" class="dashboard-preview" style="padding: 40px 40px 0px 40px;">
-                            <img src="https://ik.imagekit.io/a6fkjou7d/dashboard-preview.png?updatedAt=1756378548102" alt="Signalist Dashboard Preview" width="100%" style="max-width: 520px; width: 100%; height: auto; border-radius: 12px; border: 1px solid #30333A;">
+                            <img src="https://res.cloudinary.com/damvrr929/image/upload/v1762137377/dashboard_tdjptn.png" alt="RTStock Dashboard Preview" width="100%" style="max-width: 520px; width: 100%; height: auto; border-radius: 12px; border: 1px solid #30333A;">
                         </td>
                     </tr>
                     
                     <!-- Main Content -->
                     <tr>
-                        <td class="mobile-padding" style="padding: 40px 40px 40px 40px;">
-                            
-                            <!-- Welcome Heading -->
-                            <h1 class="mobile-title dark-text" style="margin: 0 0 30px 0; font-size: 24px; font-weight: 600; color: #FDD458; line-height: 1.2;">
-                                Welcome aboard {{name}}
-                            </h1>
-                            
-                            <!-- Intro Text -->
-                            {{intro}}  
-                            
-                            <!-- Feature List Label -->
-                            <p class="mobile-text dark-text-secondary" style="margin: 0 0 15px 0; font-size: 16px; line-height: 1.6; color: #CCDADC; font-weight: 600;">
-                                Here's what you can do right now:
-                            </p>
-                            
-                            <!-- Feature List -->
-                            <ul class="mobile-text dark-text-secondary" style="margin: 0 0 30px 0; padding-left: 20px; font-size: 16px; line-height: 1.6; color: #CCDADC;">
-                                <li style="margin-bottom: 12px;">Set up your watchlist to follow your favorite stocks</li>
-                                <li style="margin-bottom: 12px;">Create price and volume alerts so you never miss a move</li>
-                                <li style="margin-bottom: 12px;">Explore the dashboard for trends and the latest market news</li>
-                            </ul>
-                            
-                            <!-- Additional Text -->
-                            <p class="mobile-text dark-text-secondary" style="margin: 0 0 40px 0; font-size: 16px; line-height: 1.6; color: #CCDADC;">
-                                We'll keep you informed with timely updates, insights, and alerts — so you can focus on making the right calls.
-                            </p>
-                            
-                            <!-- CTA Button -->
-                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 0 40px 0; width: 100%;">
-                                <tr>
-                                    <td align="center">
-                                        <a href="https://stock-market-dev.vercel.app/" style="display: block; width: 100%; background: linear-gradient(135deg, #FDD458 0%, #E8BA40 100%); color: #000000; text-decoration: none; padding: 16px 32px; border-radius: 8px; font-size: 16px; font-weight: 500; line-height: 1; text-align: center; box-sizing: border-box;">
-                                            Go to Dashboard
-                                        </a>
-                                    </td>
-                                </tr>
-                            </table>
-                            
-                            <!-- Footer Text -->
-                            <p class="mobile-text dark-text-muted" style="margin: 40px 0 0 0; font-size: 14px; line-height: 1.5; color: #CCDADC !important; text-align: center;">
-                               Signalist HQ, 200 Market Street, San Francisco, CA 94105<br>
-                                <a href="#" style="color: #CCDADC !important; text-decoration: underline;">Unsubscribe</a> | 
-                                <a href="https://stock-market-dev.vercel.app/" style="color: #CCDADC !important; text-decoration: underline;">Visit Signalist</a><br>
-                                © 2025 Signalist
-                            </p>
-                        </td>
+                       <td class="mobile-padding" style="padding: 40px 40px 40px 40px;">
+  <!-- Welcome Heading -->
+  <h1
+    class="mobile-title dark-text"
+    style="margin: 0 0 30px 0; font-size: 24px; font-weight: 600; color: #FDD458; line-height: 1.2;"
+  >
+    Welcome aboard {{name}}
+  </h1>
+
+  <!-- Intro Text -->
+  <p
+    class="mobile-text dark-text-secondary"
+    style="
+      margin: 0 0 25px 0;
+      font-size: 16px;
+      line-height: 1.7;
+      color: #E0E6E9;
+      font-weight: 400;
+    "
+  >
+    {{intro}}
+  </p>
+
+  <!-- Feature List Label -->
+  <p
+    class="mobile-text dark-text-secondary"
+    style="
+      margin: 0 0 15px 0;
+      font-size: 16px;
+      line-height: 1.6;
+      color: #CCDADC;
+      font-weight: 600;
+    "
+  >
+    Here's what you can do right now:
+  </p>
+
+  <!-- Feature List -->
+  <ul
+    class="mobile-text dark-text-secondary"
+    style="
+      margin: 0 0 30px 0;
+      padding-left: 20px;
+      font-size: 16px;
+      line-height: 1.6;
+      color: #CCDADC;
+    "
+  >
+    <li style="margin-bottom: 12px;">Set up your watchlist to follow your favorite stocks</li>
+    <li style="margin-bottom: 12px;">Create price and volume alerts so you never miss a move</li>
+    <li style="margin-bottom: 12px;">Explore the dashboard for trends and the latest market news</li>
+  </ul>
+
+  <!-- Additional Text -->
+  <p
+    class="mobile-text dark-text-secondary"
+    style="
+      margin: 0 0 40px 0;
+      font-size: 16px;
+      line-height: 1.6;
+      color: #CCDADC;
+    "
+  >
+    We'll keep you informed with timely updates, insights, and alerts — so you can focus on making the right calls.
+  </p>
+
+  <!-- CTA Button -->
+  <table
+    role="presentation"
+    cellspacing="0"
+    cellpadding="0"
+    border="0"
+    style="margin: 0 0 40px 0; width: 100%;"
+  >
+    <tr>
+      <td align="center">
+        <a
+          href="https://stock-market-dev.vercel.app/"
+          style="
+            display: block;
+            width: 100%;
+            background: linear-gradient(135deg, #FDD458 0%, #E8BA40 100%);
+            color: #000000;
+            text-decoration: none;
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 1;
+            text-align: center;
+            box-sizing: border-box;
+          "
+        >
+          Go to Dashboard
+        </a>
+      </td>
+    </tr>
+  </table>
+
+  <!-- Footer Text -->
+  <p
+    class="mobile-text dark-text-muted"
+    style="
+      margin: 40px 0 0 0;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #CCDADC !important;
+      text-align: center;
+    "
+  >
+    RTStock, Jakarta Indonesia<br />
+    <a
+      href="#"
+      style="color: #CCDADC !important; text-decoration: underline;"
+      >Unsubscribe</a
+    >
+    |
+    <a
+      href="https://stock-market-dev.vercel.app/"
+      style="color: #CCDADC !important; text-decoration: underline;"
+      >Visit RTStock</a
+    ><br />
+    © 2025 RTStock
+  </p>
+</td>
+
                     </tr>
                     
                 </table>
@@ -260,7 +340,7 @@ export const NEWS_SUMMARY_EMAIL_TEMPLATE = `<!DOCTYPE html>
                     <!-- Header with Logo -->
                     <tr>
                         <td align="left" class="mobile-header-padding" style="padding: 40px 40px 20px 40px;">
-                            <img src="https://ik.imagekit.io/a6fkjou7d/logo.png?updatedAt=1756378431634" alt="Signalist Logo" width="150" style="max-width: 100%; height: auto;">
+                            <img src="https://ik.imagekit.io/a6fkjou7d/logo.png?updatedAt=1756378431634" alt="RTStock Logo" width="150" style="max-width: 100%; height: auto;">
                         </td>
                     </tr>
                     
@@ -284,14 +364,14 @@ export const NEWS_SUMMARY_EMAIL_TEMPLATE = `<!DOCTYPE html>
                             <!-- Footer Text -->
                             <div style="text-align: center; margin: 40px 0 0 0;">
                                 <p style="margin: 0 0 10px 0; font-size: 14px; line-height: 1.5; color: #CCDADC !important;">
-                                    You're receiving this because you subscribed to Signalist news updates.
+                                    You're receiving this because you subscribed to RTStock news updates.
                                 </p>
                                 <p style="margin: 0 0 10px 0; font-size: 14px; line-height: 1.5; color: #CCDADC !important;">
                                     <a href="#" style="color: #CCDADC !important; text-decoration: underline;">Unsubscribe</a> | 
-                                    <a href="https://signalist.app" style="color: #CCDADC !important; text-decoration: underline;">Visit Signalist</a>
+                                    <a href="https://RTStock.app" style="color: #CCDADC !important; text-decoration: underline;">Visit RTStock</a>
                                 </p>
                                 <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #CCDADC !important;">
-                                    © 2025 Signalist
+                                    © 2025 RTStock
                                 </p>
                             </div>
                         </td>
@@ -410,7 +490,7 @@ export const STOCK_ALERT_UPPER_EMAIL_TEMPLATE = `<!DOCTYPE html>
                     <!-- Header with Logo -->
                     <tr>
                         <td align="left" class="mobile-header-padding" style="padding: 40px 40px 20px 40px;">
-                            <img src="https://ik.imagekit.io/a6fkjou7d/logo.png?updatedAt=1756378431634" alt="Signalist Logo" width="150" style="max-width: 100%; height: auto;">
+                            <img src="https://ik.imagekit.io/a6fkjou7d/logo.png?updatedAt=1756378431634" alt="RTStock Logo" width="150" style="max-width: 100%; height: auto;">
                         </td>
                     </tr>
                     
@@ -493,14 +573,14 @@ export const STOCK_ALERT_UPPER_EMAIL_TEMPLATE = `<!DOCTYPE html>
                              <!-- Footer Text -->
                             <div style="text-align: center; margin: 40px 0 0 0;">
                                 <p style="margin: 0 0 10px 0; font-size: 14px; line-height: 1.5; color: #CCDADC !important;">
-                                    You're receiving this because you subscribed to Signalist news updates.
+                                    You're receiving this because you subscribed to RTStock news updates.
                                 </p>
                                 <p style="margin: 0 0 10px 0; font-size: 14px; line-height: 1.5; color: #CCDADC !important;">
                                     <a href="#" style="color: #CCDADC !important; text-decoration: underline;">Unsubscribe</a> | 
-                                    <a href="https://signalist.app" style="color: #CCDADC !important; text-decoration: underline;">Visit Signalist</a>
+                                    <a href="https://RTStock.app" style="color: #CCDADC !important; text-decoration: underline;">Visit RTStock</a>
                                 </p>
                                 <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #CCDADC !important;">
-                                    © 2025 Signalist
+                                    © 2025 RTStock
                                 </p>
                             </div>
                         </td>
@@ -619,7 +699,7 @@ export const STOCK_ALERT_LOWER_EMAIL_TEMPLATE = `<!DOCTYPE html>
                     <!-- Header with Logo -->
                     <tr>
                         <td align="left" class="mobile-header-padding" style="padding: 40px 40px 20px 40px;">
-                            <img src="https://ik.imagekit.io/a6fkjou7d/logo.png?updatedAt=1756378431634" alt="Signalist Logo" width="150" style="max-width: 100%; height: auto;">
+                            <img src="https://ik.imagekit.io/a6fkjou7d/logo.png?updatedAt=1756378431634" alt="RTStock Logo" width="150" style="max-width: 100%; height: auto;">
                         </td>
                     </tr>
                     
@@ -702,14 +782,14 @@ export const STOCK_ALERT_LOWER_EMAIL_TEMPLATE = `<!DOCTYPE html>
                              <!-- Footer Text -->
                             <div style="text-align: center; margin: 40px 0 0 0;">
                                 <p style="margin: 0 0 10px 0; font-size: 14px; line-height: 1.5; color: #CCDADC !important;">
-                                    You're receiving this because you subscribed to Signalist news updates.
+                                    You're receiving this because you subscribed to RTStock news updates.
                                 </p>
                                 <p style="margin: 0 0 10px 0; font-size: 14px; line-height: 1.5; color: #CCDADC !important;">
                                     <a href="#" style="color: #CCDADC !important; text-decoration: underline;">Unsubscribe</a> | 
-                                    <a href="https://signalist.app" style="color: #CCDADC !important; text-decoration: underline;">Visit Signalist</a>
+                                    <a href="https://RTStock.app" style="color: #CCDADC !important; text-decoration: underline;">Visit RTStock</a>
                                 </p>
                                 <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #CCDADC !important;">
-                                    © 2025 Signalist
+                                    © 2025 RTStock
                                 </p>
                             </div>
                         </td>
@@ -819,7 +899,7 @@ export const VOLUME_ALERT_EMAIL_TEMPLATE = `<!DOCTYPE html>
                     <!-- Header with Logo -->
                     <tr>
                         <td align="left" class="mobile-header-padding" style="padding: 40px 40px 20px 40px;">
-                            <img src="https://ik.imagekit.io/a6fkjou7d/logo.png?updatedAt=1756378431634" alt="Signalist Logo" width="150" style="max-width: 100%; height: auto;">
+                            <img src="https://ik.imagekit.io/a6fkjou7d/logo.png?updatedAt=1756378431634" alt="RTStock Logo" width="150" style="max-width: 100%; height: auto;">
                         </td>
                     </tr>
                     
@@ -922,14 +1002,14 @@ export const VOLUME_ALERT_EMAIL_TEMPLATE = `<!DOCTYPE html>
                              <!-- Footer Text -->
                             <div style="text-align: center; margin: 40px 0 0 0;">
                                 <p style="margin: 0 0 10px 0; font-size: 14px; line-height: 1.5; color: #CCDADC !important;">
-                                    You're receiving this because you subscribed to Signalist news updates.
+                                    You're receiving this because you subscribed to RTStock news updates.
                                 </p>
                                 <p style="margin: 0 0 10px 0; font-size: 14px; line-height: 1.5; color: #CCDADC !important;">
                                     <a href="#" style="color: #CCDADC !important; text-decoration: underline;">Unsubscribe</a> | 
-                                    <a href="https://signalist.app" style="color: #CCDADC !important; text-decoration: underline;">Visit Signalist</a>
+                                    <a href="https://RTStock.app" style="color: #CCDADC !important; text-decoration: underline;">Visit RTStock</a>
                                 </p>
                                 <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #CCDADC !important;">
-                                    © 2025 Signalist
+                                    © 2025 RTStock
                                 </p>
                             </div>
                         </td>
@@ -1042,7 +1122,7 @@ export const INACTIVE_USER_REMINDER_EMAIL_TEMPLATE = `<!DOCTYPE html>
                     <!-- Header with Logo -->
                     <tr>
                         <td align="left" class="mobile-header-padding" style="padding: 40px 40px 20px 40px;">
-                            <img src="https://ik.imagekit.io/a6fkjou7d/logo.png?updatedAt=1756378431634" alt="Signalist Logo" width="150" style="max-width: 100%; height: auto;">
+                            <img src="https://ik.imagekit.io/a6fkjou7d/logo.png?updatedAt=1756378431634" alt="RTStock Logo" width="150" style="max-width: 100%; height: auto;">
                         </td>
                     </tr>
                     
@@ -1057,7 +1137,7 @@ export const INACTIVE_USER_REMINDER_EMAIL_TEMPLATE = `<!DOCTYPE html>
                             
                             <!-- Main Message -->
                             <p class="mobile-text dark-text-secondary" style="margin: 0 0 30px 0; font-size: 16px; line-height: 1.6; color: #CCDADC;">
-                                We noticed you haven't visited Signalist in a while. The markets have been moving, and there might be some opportunities you don't want to miss!
+                                We noticed you haven't visited RTStock in a while. The markets have been moving, and there might be some opportunities you don't want to miss!
                             </p>
 
                             <!-- Additional Motivation -->
@@ -1093,10 +1173,10 @@ export const INACTIVE_USER_REMINDER_EMAIL_TEMPLATE = `<!DOCTYPE html>
                                 </p>
                                 <p style="margin: 0 0 10px 0; font-size: 14px; line-height: 1.5; color: #CCDADC !important;">
                                     <a href="{{unsubscribeUrl}}" style="color: #CCDADC !important; text-decoration: underline;">Unsubscribe</a> | 
-                                    <a href="{{dashboardUrl}}" style="color: #CCDADC !important; text-decoration: underline;">Visit Signalist</a>
+                                    <a href="{{dashboardUrl}}" style="color: #CCDADC !important; text-decoration: underline;">Visit RTStock</a>
                                 </p>
                                 <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #CCDADC !important;">
-                                    © 2025 Signalist
+                                    © 2025 RTStock
                                 </p>
                             </div>
                         </td>
