@@ -140,6 +140,40 @@ function TradingViewWidget({
           };
           break;
 
+        /** 🪙 CRYPTO SCREENER **/
+        case "crypto-screener":
+          src =
+            "https://s3.tradingview.com/external-embedding/embed-widget-screener.js";
+          defaultConfig = {
+            defaultColumn: "overview",
+            screener_type: "crypto_mkt",
+            displayCurrency: "BTC",
+            colorTheme: "dark",
+            isTransparent: false,
+            locale: "en",
+            width: "100%",
+            height: 550,
+          };
+          break;
+
+        /** 🧊 CRYPTO HEATMAP **/
+        case "crypto-heatmap":
+          src =
+            "https://s3.tradingview.com/external-embedding/embed-widget-crypto-coins-heatmap.js";
+          defaultConfig = {
+            dataSource: "Crypto",
+            blockSize: "market_cap_calc",
+            blockColor: "24h_close_change|5",
+            locale: "en",
+            colorTheme: "dark",
+            hasTopBar: false,
+            isZoomEnabled: true,
+            hasSymbolTooltip: true,
+            width: "100%",
+            height: "100%",
+          };
+          break;
+
         default:
           console.error("❌ Invalid TradingView widget type:", type);
           return;

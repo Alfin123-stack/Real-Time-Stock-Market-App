@@ -2,9 +2,9 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { ChartNetworkIcon, Newspaper } from "lucide-react";
+import { ChartNetworkIcon, Newspaper, Coins } from "lucide-react";
 
-type PageHeaderType = "stock" | "news";
+type PageHeaderType = "stock" | "news" | "crypto";
 
 interface PageHeaderSectionProps {
   type: PageHeaderType;
@@ -17,8 +17,14 @@ export default function PageHeaderSection({
   title,
   description,
 }: PageHeaderSectionProps) {
-  // 🧠 Tentukan ikon dan warna otomatis berdasar type
-  const Icon = type === "stock" ? ChartNetworkIcon : Newspaper;
+  // 🎨 Tentukan ikon & warna otomatis
+  const iconMap = {
+    stock: { Icon: ChartNetworkIcon },
+    news: { Icon: Newspaper },
+    crypto: { Icon: Coins },
+  };
+
+  const { Icon } = iconMap[type] || iconMap.stock;
 
   return (
     <section className="pt-28 pb-10 text-center">
@@ -26,7 +32,7 @@ export default function PageHeaderSection({
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="text-4xl md:text-5xl font-extrabold tracking-tight text-white flex items-center justify-center gap-2">
+        className="text-4xl md:text-5xl font-extrabold tracking-tight text-white flex items-center justify-center gap-3">
         <Icon className={`w-12 h-12 text-orange-400`} />
         <span>{title}</span>
       </motion.h1>

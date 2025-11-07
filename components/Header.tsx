@@ -12,6 +12,10 @@ import {
   Loader2,
   ChevronDown,
   User,
+  LayoutDashboard,
+  LineChart,
+  Newspaper,
+  Bitcoin,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { signOut } from "@/lib/actions/auth.actions";
@@ -32,11 +36,27 @@ export default function Header({ username }: { username?: string | null }) {
   const [isLoading, setIsLoading] = useState(false);
 
   const pathname = usePathname();
-
   const navLinks = [
-    { href: "/dashboard", label: "Dashboard" },
-    { href: "/markets", label: "Markets" },
-    { href: "/news", label: "News" },
+    {
+      href: "/dashboard",
+      label: "Dashboard",
+      icon: LayoutDashboard,
+    },
+    {
+      href: "/markets",
+      label: "Markets",
+      icon: LineChart,
+    },
+    {
+      href: "/news",
+      label: "News",
+      icon: Newspaper,
+    },
+    {
+      href: "/crypto-market",
+      label: "Crypto Market",
+      icon: Bitcoin,
+    },
   ];
 
   const handleLogout = async () => {
@@ -74,17 +94,19 @@ export default function Header({ username }: { username?: string | null }) {
         <nav className="hidden md:flex items-center gap-6">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
+            const Icon = link.icon;
 
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`font-medium transition ${
+                className={`flex items-center gap-2 font-medium transition ${
                   isActive
                     ? "text-orange-400 border-b-2 border-orange-400 pb-1"
                     : "text-slate-400 hover:text-orange-400"
                 }`}>
-                {link.label}
+                <Icon className="w-4 h-4" />
+                <span>{link.label}</span>
               </Link>
             );
           })}
